@@ -59,20 +59,19 @@ class NuevoMed : AppCompatActivity() {
         .addOnSuccessListener { // extrae el código de barras del medicamento.
                 barcode -> val codigoEnRaw: String? = barcode.rawValue
             val codigoRegistro = codigoEnRaw.toString().substring(6, 12)
-            Log.d("TAG_FILTRO", "el código de registro es: ${codigoRegistro}")
-            binding.tvPruebaBarcode.text = codigoRegistro
 
+            Log.d("TAG_FILTRO", "el código de registro es: ${codigoRegistro}")
 
             // llamada a la función que verifica que el medicamento es un medicamento correcto.
             lifecycleScope.launch {
                 val infoMed = infoMedicamento(codigoRegistro)
                 binding.tvPruebaBarcode.text = infoMed
             }
-        }
-        .addOnFailureListener { exception -> Toast.makeText(this, "error al abrrir la cámara", Toast.LENGTH_SHORT).show()
-        }
+            }
+            .addOnFailureListener { exception -> Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+            }
 
-}
+        }
 
     // función para la verificación de un medicamento.
     suspend fun infoMedicamento (codigoMed: String): String{
