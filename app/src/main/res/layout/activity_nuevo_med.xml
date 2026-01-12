@@ -19,7 +19,8 @@
             android:id="@+id/btnAbrirAcmara"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Button"
+            android:layout_marginTop="35sp"/>
 
         <EditText
             android:id="@+id/edtNombreMed"
@@ -36,7 +37,13 @@
             android:ems="10"
             android:inputType="text"
             android:text="Name"/>
-<!--            TODO: cambiar el tipo de elemento para poder acceder a las fechas-->
+
+        <TextView
+            android:id="@+id/tvPruebaBarcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+        <!--            TODO: cambiar el tipo de elemento para poder acceder a las fechas-->
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

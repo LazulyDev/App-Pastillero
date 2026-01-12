@@ -46,8 +46,14 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.contentpager)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // dependencia de Google para acceder a la cámara
     implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
+    // dependencia de Retrofit para llamadas a la API para verificar los medicamentos
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    // dependencia para tratar el json
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 }
