@@ -29,7 +29,7 @@ class NuevoMed : AppCompatActivity() {
 
         // botón para acceder a la cámara
         binding.btnAbrirAcmara.setOnClickListener {
-            // TODO: funcion para acceder a la cámara
+            accesoCamara()
         }
     }
 
@@ -41,10 +41,14 @@ class NuevoMed : AppCompatActivity() {
             Barcode.FORMAT_ALL_FORMATS
         ).enableAutoZoom().build()
 
+        // lee el código del medicamento y ejecuta la funcion que verifica que el medicamento sea real y apto para el consumo
         val scanner = GmsBarcodeScanning.getClient(this)
         scanner.startScan()
-            .addOnSuccessListener {
+            .addOnSuccessListener { // extrae el código de barras del medicamento
                 barcode -> val codigoEnRaw: String? = barcode.rawValue
+                binding.tvPruebaBarcode.text = codigoEnRaw
+
+                // llamada a la función que verifica que el medicamento es un medicamento correcto.
             }
             .addOnFailureListener { exception -> Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
             }
@@ -56,7 +60,8 @@ class NuevoMed : AppCompatActivity() {
         if (codigoMed == null || codigoMed.length <= 0){
             Toast.makeText(this, "no hay código que leer", Toast.LENGTH_SHORT).show()
         } else {
-            
+            // verificación del código de barras en el CIMA
+
         }
 
         return false
