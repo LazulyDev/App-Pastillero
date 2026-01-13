@@ -31,6 +31,9 @@ private lateinit var binding: ActivityNuevoMedBinding
     6. permite guardar la info de la toma de las dosis en el calendario
 * */
 class NuevoMed : AppCompatActivity() {
+
+    private var nombreMed: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -49,6 +52,10 @@ class NuevoMed : AppCompatActivity() {
             accesoCamara()
         }
 
+        binding.btnAnadirMed.setOnClickListener {
+            val intervalo = binding.edtIntervalo.text.toString().toInt()
+            programarDosis(this, nombreMed, intervalo)
+        }
     }
 
     // funcion para poder usar la cámara para leer un código.
@@ -90,7 +97,11 @@ class NuevoMed : AppCompatActivity() {
         // solicita a CIMA la información del medicamento y la returna.
         try {
             val respuestaCIMA = RetrofitClient.cimaAPI.getMedicamento(codigoMed)
-            return "nombre ${respuestaCIMA.listaMedicamentos[0].nombre} \n fabricante ${respuestaCIMA.listaMedicamentos[0].fabricante} \n Número de Registro ${respuestaCIMA.listaMedicamentos[0].numeroRegistro} \n prescripcion: ${respuestaCIMA.listaMedicamentos[0].prescripcion}"
+            nombreMed = respuestaCIMA.listaMedicamentos[0].nombre.toString()
+            return "nombre ${respuestaCIMA.listaMedicamentos[0].nombre} \n fabricante ${respuestaCIMA.listaMedicamentos[0].fabricante} " +
+                    "\n Número de Registro ${respuestaCIMA.listaMedicamentos[0].numeroRegistro} " +
+                    "\n prescripcion: ${respuestaCIMA.listaMedicamentos[0].prescripcion}"
+
         } catch (e: Exception){ // gestión de los errores.
             Toast.makeText(this, "Medicamento no encontrado", Toast.LENGTH_SHORT).show()
             Log.e("TAG_FILTRO", "Mensaje de error: ${e.message}")
@@ -100,7 +111,7 @@ class NuevoMed : AppCompatActivity() {
     }
 
     // funcion para proramar las dosis en el calendario
-    fun programarDosis(context: Context, nombreMed: String, fechaInicio: String, intervalo: Int){
+    fun programarDosis(context: Context, nombreMed: String, intervalo: Int){
 
         val tomasDiarias = 24/intervalo
 

@@ -23,7 +23,7 @@
             android:layout_marginTop="35sp"/>
 
         <EditText
-            android:id="@+id/edtFechas"
+            android:id="@+id/edtIntervalo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
