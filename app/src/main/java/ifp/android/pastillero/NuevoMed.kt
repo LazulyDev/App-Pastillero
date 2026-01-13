@@ -1,6 +1,9 @@
 package ifp.android.pastillero
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -14,6 +17,7 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import ifp.android.pastillero.databinding.ActivityNuevoMedBinding
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import kotlin.math.log
 
 private lateinit var binding: ActivityNuevoMedBinding
@@ -24,6 +28,7 @@ private lateinit var binding: ActivityNuevoMedBinding
     3. envía el número de registro del medicamento al CIMA (Centro de Investigacion de Medicamentos de la AEMPS, Agencia Española de Medicamentos y Productos Sanitarios)
     4. añade el medicamento a una lista para poder acceder a la información.
     5. muestra la información del medicamento y solicita al usuario el tiempo entre consumiciones.
+    6. permite guardar la info de la toma de las dosis en el calendario
 * */
 class NuevoMed : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +48,7 @@ class NuevoMed : AppCompatActivity() {
         binding.btnAbrirAcmara.setOnClickListener {
             accesoCamara()
         }
+
     }
 
     // funcion para poder usar la cámara para leer un código.
@@ -91,5 +97,30 @@ class NuevoMed : AppCompatActivity() {
             return "No es un medicamento"
         }
         return ""
+    }
+
+    // funcion para proramar las dosis en el calendario
+    fun programarDosis(context: Context, nombreMed: String, fechaInicio: String, intervalo: Int){
+
+        val tomasDiarias = 24/intervalo
+
+        for (i in 0 until tomasDiarias){
+
+            val horaToma = Calendar.getInstance().apply {
+                add(Calendar.HOUR_OF_DAY, i * intervalo)
+            }
+
+            val intento = Intent(Intent.ACTION_INSERT).apply {
+                data = CalendarContract.Events.CONTENT_URI
+                putExtra(CalendarContract.Events.TITLE, "toma de ${nombreMed}")
+                putExtra(CalendarContract.Events.DESCRIPTION, "Dosis programada de ${nombreMed} cada ${intervalo} horas")
+                putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, horaToma.timeInMillis)
+                putExtra(CalendarContract.EXTRA_EVENT_END_TIME, horaToma.timeInMillis + 10 * 60 * 1000)
+                putExtra(CalendarContract.Events.RRULE, "FREQ=DAILY;INTERVAL=1")
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+
+            context.startActivity(intento)
+        }
     }
 }

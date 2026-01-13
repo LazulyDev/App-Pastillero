@@ -23,14 +23,6 @@
             android:layout_marginTop="35sp"/>
 
         <EditText
-            android:id="@+id/edtNombreMed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
-
-        <EditText
             android:id="@+id/edtFechas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +34,13 @@
             android:id="@+id/tvPruebaBarcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="" />
+
+        <Button
+            android:id="@+id/btnAnadirMed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
         <!--            TODO: cambiar el tipo de elemento para poder acceder a las fechas-->
 
     </LinearLayout>
