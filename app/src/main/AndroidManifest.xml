@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-<!--    permisos de acceso a internet para la api del medicamento-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-<!--    permisos de acceso al calendario para que el usuario programe las dosis-->
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <!-- permisos de acceso a internet para la api del medicamento -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- permisos de acceso al calendario para que el usuario programe las dosis -->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pastillero">
+        <activity
+            android:name=".aboutUs"
+            android:exported="false" />
         <activity
             android:name=".NuevoMed"
             android:exported="false" />

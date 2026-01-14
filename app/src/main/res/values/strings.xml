@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Pastillero</string>
+    <string name="tvTituloAboutUs">Roberto Garcia, ChenHang Zang</string>
+    <string name="tvAboutUs">Somos dos programadores enfocados en el desarrollo nativo para Android, unidos por la curiosidad técnica y el deseo de crear soluciones móviles eficientes. Como estudiantes avanzados, nos dedicamos a transformar ideas complejas en interfaces intuitivas y código escalable.</string>
+    <string name="tvTituloPerfilTécnico">Perfil Técnico</string>
+    <string name="tvperfilTecnico">Lenguajes: Kotlin y Java.  Arquitectura: Implementación de Clean Architecture y patrones MVVM.  Interfaz de Usuario: Dominio de Jetpack Compose y XML.  Gestión de Datos: Manejo de Retrofit para APIs y Room para bases de datos locales.</string>
 </resources>

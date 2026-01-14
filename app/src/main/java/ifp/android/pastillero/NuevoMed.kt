@@ -53,50 +53,65 @@ class NuevoMed : AppCompatActivity() {
         }
 
         binding.btnAnadirMed.setOnClickListener {
-            val intervalo = binding.edtIntervalo.text.toString().toInt()
-            programarDosis(this, nombreMed, intervalo)
+            val intervalo = binding.edtIntervalo.text.toString()
+
+            if(intervalo.isNullOrEmpty()){
+                Log.e("ERROR_TIEMPO_DADO", "Error: el tiempo está vacío")
+                Toast.makeText(this, "error. tiempo vacío", Toast.LENGTH_SHORT).show()
+            } else {
+                if(nombreMed.equals("No es un medicamento")) {
+                    Log.e("ERROR_NO_MEDICAMENTO", "Error: se ha pulsado el botón continuar sin medicamento")
+                    Toast.makeText(this, "Es necesario seleccionar un medicamento", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.i("ACCESO_CALENDAR", "Accediensdo a Calendar")
+                    programarDosis(this, nombreMed, intervalo.toInt())
+                }
+            }
+
+
         }
     }
 
     // funcion para poder usar la cámara para leer un código.
     fun accesoCamara(){
 
-    // ajustes para la cámara para poder leer códigos.
-    val configuracionesCamara = GmsBarcodeScannerOptions.Builder().setBarcodeFormats(
-        Barcode.FORMAT_ALL_FORMATS
-    ).enableAutoZoom().build()
+        // ajustes para la cámara para poder leer códigos.
+        val configuracionesCamara = GmsBarcodeScannerOptions.Builder().setBarcodeFormats(
+            Barcode.FORMAT_ALL_FORMATS
+        ).enableAutoZoom().build()
 
-    // lee el código del medicamento y ejecuta la funcion que verifica que el medicamento sea real y apto para el consumo.
-    val scanner = GmsBarcodeScanning.getClient(this)
-    scanner.startScan()
-        .addOnSuccessListener { // extrae el código de barras del medicamento.
-                barcode -> val codigoEnRaw: String? = barcode.rawValue
-            val codigoRegistro = codigoEnRaw.toString().substring(6, 12)
+        // lee el código del medicamento y ejecuta la funcion que verifica que el medicamento sea real y apto para el consumo.
+        val scanner = GmsBarcodeScanning.getClient(this)
+        scanner.startScan()
+            .addOnSuccessListener { // extrae el código de barras del medicamento.
+                    barcode -> val codigoEnRaw: String? = barcode.rawValue
+                val codigoRegistro = codigoEnRaw.toString().substring(6, 12)
 
-            Log.d("TAG_FILTRO", "el código de registro es: ${codigoRegistro}")
+                Log.d("TAG_FILTRO", "el código de registro es: ${codigoRegistro}")
 
-            // llamada a la función que verifica que el medicamento es un medicamento correcto.
-            lifecycleScope.launch {
-                val infoMed = infoMedicamento(codigoRegistro)
-                binding.tvPruebaBarcode.text = infoMed
-            }
+                // llamada a la función que verifica que el medicamento es un medicamento correcto.
+                lifecycleScope.launch {
+                    val infoMed = infoMedicamento(codigoRegistro)
+                    binding.tvPruebaBarcode.text = infoMed
+                }
             }
             .addOnFailureListener { exception -> Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
             }
 
-        }
+    }
 
     // función para la verificación de un medicamento.
     suspend fun infoMedicamento (codigoMed: String): String{
 
         // asegura de que no entren valores nulos o vacíos
         if (codigoMed.isNullOrEmpty()){
+            Log.e("EEROR_NO_CODIGO", "Error: no hay código que leer")
             Toast.makeText(this, "no hay código que leer", Toast.LENGTH_SHORT).show()
         }
 
         // solicita a CIMA la información del medicamento y la returna.
         try {
-            val respuestaCIMA = RetrofitClient.cimaAPI.getMedicamento(codigoMed)
+            val respuestaCIMA = RetrofitClient.cimaAPI.getMedicamento(codigoMed) // TODO: cambiar a codigoMed
             nombreMed = respuestaCIMA.listaMedicamentos[0].nombre.toString()
             return "nombre ${respuestaCIMA.listaMedicamentos[0].nombre} \n fabricante ${respuestaCIMA.listaMedicamentos[0].fabricante} " +
                     "\n Número de Registro ${respuestaCIMA.listaMedicamentos[0].numeroRegistro} " +
@@ -111,27 +126,28 @@ class NuevoMed : AppCompatActivity() {
     }
 
     // funcion para proramar las dosis en el calendario
-    fun programarDosis(context: Context, nombreMed: String, intervalo: Int){
-
-        val tomasDiarias = 24/intervalo
-
-        for (i in 0 until tomasDiarias){
-
-            val horaToma = Calendar.getInstance().apply {
-                add(Calendar.HOUR_OF_DAY, i * intervalo)
-            }
+    fun programarDosis(context: Context, nombreMed: String, intervalo: Int) {
+        try {
+            val ahora = Calendar.getInstance()
 
             val intento = Intent(Intent.ACTION_INSERT).apply {
                 data = CalendarContract.Events.CONTENT_URI
-                putExtra(CalendarContract.Events.TITLE, "toma de ${nombreMed}")
-                putExtra(CalendarContract.Events.DESCRIPTION, "Dosis programada de ${nombreMed} cada ${intervalo} horas")
-                putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, horaToma.timeInMillis)
-                putExtra(CalendarContract.EXTRA_EVENT_END_TIME, horaToma.timeInMillis + 10 * 60 * 1000)
+
+                putExtra(CalendarContract.Events.TITLE, "Pastilla: $nombreMed")
+                putExtra(CalendarContract.Events.DESCRIPTION, "Tomar cada $intervalo horas.")
+                putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, ahora.timeInMillis)
+                putExtra(CalendarContract.EXTRA_EVENT_END_TIME, ahora.timeInMillis + 15 * 60 * 1000)
                 putExtra(CalendarContract.Events.RRULE, "FREQ=DAILY;INTERVAL=1")
+                putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
 
             context.startActivity(intento)
+
+        } catch (e: Exception) {
+            Log.e("ENTREGA", "Error: ${e.message}")
+            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
         }
     }
 }
