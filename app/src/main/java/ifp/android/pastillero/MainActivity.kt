@@ -2,11 +2,13 @@ package ifp.android.pastillero
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import ifp.android.pastillero.databinding.ActivityAboutUsBinding
 import ifp.android.pastillero.databinding.ActivityMainBinding
 
 private lateinit var binding: ActivityMainBinding
@@ -32,5 +34,12 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "añadir nuevos medicamentos", Toast.LENGTH_SHORT).show() // TODO: poner String
         }
 
+        // botón about us
+        binding.btnAboutUs.setOnClickListener{
+            val intento = Intent(this, AboutUs::class.java)
+            startActivity(intento)
+            Log.i("INICIO_ACTIVIDAD", "Iniciada la actividad About us")
+            Toast.makeText(this, "About us", Toast.LENGTH_SHORT).show()
+        }
     }
 }

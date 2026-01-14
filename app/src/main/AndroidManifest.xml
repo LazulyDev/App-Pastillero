@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pastillero">
         <activity
-            android:name=".aboutUs"
+            android:name=".AboutUs"
             android:exported="false" />
         <activity
             android:name=".NuevoMed"
