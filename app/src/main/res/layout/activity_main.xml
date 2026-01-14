@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:layout_margin="35sp"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/btnAboutUs" />
     </LinearLayout>
 
 

@@ -57,11 +57,11 @@ class NuevoMed : AppCompatActivity() {
 
             if(intervalo.isNullOrEmpty()){
                 Log.e("ERROR_TIEMPO_DADO", "Error: el tiempo está vacío")
-                Toast.makeText(this, "error. tiempo vacío", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.tstTiempoVacío, Toast.LENGTH_SHORT).show()
             } else {
                 if(nombreMed.equals("No es un medicamento")) {
                     Log.e("ERROR_NO_MEDICAMENTO", "Error: se ha pulsado el botón continuar sin medicamento")
-                    Toast.makeText(this, "Es necesario seleccionar un medicamento", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.tstSeleccionNuevoMed, Toast.LENGTH_SHORT).show()
                 } else {
                     Log.i("ACCESO_CALENDAR", "Accediensdo a Calendar")
                     programarDosis(this, nombreMed, intervalo.toInt())
@@ -95,7 +95,8 @@ class NuevoMed : AppCompatActivity() {
                     binding.tvPruebaBarcode.text = infoMed
                 }
             }
-            .addOnFailureListener { exception -> Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { exception -> Toast.makeText(this, R.string.tstErrorCamara, Toast.LENGTH_SHORT).show()
+                Log.e("ERROR_CAMARA", "error al abrir la cámara.")
             }
 
     }
@@ -106,7 +107,7 @@ class NuevoMed : AppCompatActivity() {
         // asegura de que no entren valores nulos o vacíos
         if (codigoMed.isNullOrEmpty()){
             Log.e("EEROR_NO_CODIGO", "Error: no hay código que leer")
-            Toast.makeText(this, "no hay código que leer", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.tstSinCodigo, Toast.LENGTH_SHORT).show()
         }
 
         // solicita a CIMA la información del medicamento y la returna.
@@ -118,7 +119,7 @@ class NuevoMed : AppCompatActivity() {
                     "\n prescripcion: ${respuestaCIMA.listaMedicamentos[0].prescripcion}"
 
         } catch (e: Exception){ // gestión de los errores.
-            Toast.makeText(this, "Medicamento no encontrado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.tstMedicamentoNoEncontrado, Toast.LENGTH_SHORT).show()
             Log.e("TAG_FILTRO", "Mensaje de error: ${e.message}")
             return "No es un medicamento"
         }
@@ -146,8 +147,8 @@ class NuevoMed : AppCompatActivity() {
             context.startActivity(intento)
 
         } catch (e: Exception) {
-            Log.e("ENTREGA", "Error: ${e.message}")
-            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+            Log.e("CALENDARIO", "Error: ${e.message}")
+            Toast.makeText(this, R.string.tstErrorCalendario, Toast.LENGTH_SHORT).show()
         }
     }
 }
