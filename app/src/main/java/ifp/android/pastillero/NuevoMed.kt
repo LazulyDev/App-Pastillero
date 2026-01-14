@@ -77,7 +77,7 @@ class NuevoMed : AppCompatActivity() {
 
         // ajustes para la cámara para poder leer códigos.
         val configuracionesCamara = GmsBarcodeScannerOptions.Builder().setBarcodeFormats(
-            Barcode.FORMAT_ALL_FORMATS
+            Barcode.FORMAT_CODABAR
         ).enableAutoZoom().build()
 
         // lee el código del medicamento y ejecuta la funcion que verifica que el medicamento sea real y apto para el consumo.
@@ -114,6 +114,7 @@ class NuevoMed : AppCompatActivity() {
         try {
             val respuestaCIMA = RetrofitClient.cimaAPI.getMedicamento(codigoMed) // TODO: cambiar a codigoMed
             nombreMed = respuestaCIMA.listaMedicamentos[0].nombre.toString()
+
             return "nombre ${respuestaCIMA.listaMedicamentos[0].nombre} \n fabricante ${respuestaCIMA.listaMedicamentos[0].fabricante} " +
                     "\n Número de Registro ${respuestaCIMA.listaMedicamentos[0].numeroRegistro} " +
                     "\n prescripcion: ${respuestaCIMA.listaMedicamentos[0].prescripcion}"
@@ -148,7 +149,7 @@ class NuevoMed : AppCompatActivity() {
 
         } catch (e: Exception) {
             Log.e("CALENDARIO", "Error: ${e.message}")
-            Toast.makeText(this, R.string.tstErrorCalendario, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.tstErrorCalendario , Toast.LENGTH_SHORT).show()
         }
     }
 }

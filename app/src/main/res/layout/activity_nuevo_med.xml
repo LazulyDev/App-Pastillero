@@ -19,7 +19,7 @@
             android:id="@+id/btnAbrirAcmara"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="@string/btnCamara"
             android:layout_marginTop="35sp"/>
 
         <EditText
@@ -40,8 +40,7 @@
             android:id="@+id/btnAnadirMed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
-        <!--            TODO: cambiar el tipo de elemento para poder acceder a las fechas-->
+            android:text="@string/btnCalendario" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

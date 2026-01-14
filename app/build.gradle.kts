@@ -50,6 +50,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
     // dependencia de Google para acceder a la cámara
     implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
     // dependencia de Retrofit para llamadas a la API para verificar los medicamentos
