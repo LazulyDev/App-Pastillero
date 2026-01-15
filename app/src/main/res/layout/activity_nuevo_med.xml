@@ -46,12 +46,6 @@
             android:layout_height="wrap_content"
             android:text="@string/tvInstPaso3" />
 
-        <TextView
-            android:id="@+id/tvPaso4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tvInstPaso4" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -93,6 +87,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btnCalendario" />
+
+        <Button
+            android:id="@+id/btnAnadirMedHoras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnHoras" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

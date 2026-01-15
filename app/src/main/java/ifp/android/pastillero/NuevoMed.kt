@@ -19,6 +19,9 @@ import ifp.android.pastillero.databinding.ActivityNuevoMedBinding
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import kotlin.math.log
+import android.app.AlarmManager
+import android.app.PendingIntent
+
 
 private lateinit var binding: ActivityNuevoMedBinding
 
@@ -67,8 +70,33 @@ class NuevoMed : AppCompatActivity() {
                     programarDosis(this, nombreMed, intervalo.toInt())
                 }
             }
+        }
+        binding.btnAnadirMedHoras.setOnClickListener {
+            val intervaloHoras = binding.edtIntervalo.text.toString()
+            if(intervaloHoras.isNullOrEmpty()){
+                Log.e("ERROR_TIEMPO_DADO", "Error: el tiempo está vacío")
+                Toast.makeText(this, R.string.tstTiempoVacío, Toast.LENGTH_SHORT).show()
+            }
+            else{
+                if(nombreMed.equals("No es un medicamento")) {
+                    Log.e("ERROR_NO_MEDICAMENTO", "Error: se ha pulsado el botón continuar sin medicamento")
+                    Toast.makeText(this, R.string.tstSeleccionNuevoMed, Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    val intervalo2 = intervaloHoras.toInt()
+                    if(intervalo2 <= 0){
+                        Log.e("ERROR_TIEMPO_DADO", "Error: el tiempo es un numero negativo")
+                        Toast.makeText(this, R.string.txtNumeroNegativo, Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        programarDosisHoras(this, nombreMed, intervalo2)
 
+                        Log.i("ALARM", "Recordatorios programados para $nombreMed cada $intervalo2 horas")
+                        Toast.makeText(this, "Recordatorios programados cada $intervalo2 horas", Toast.LENGTH_SHORT).show()
+                    }
 
+                }
+            }
         }
     }
 
@@ -127,7 +155,7 @@ class NuevoMed : AppCompatActivity() {
         return ""
     }
 
-    // funcion para proramar las dosis en el calendario
+    // funcion para proramar las dosis en el calendario, esto funciona a escala de dias
     fun programarDosis(context: Context, nombreMed: String, intervalo: Int) {
         try {
             val ahora = Calendar.getInstance()
@@ -148,6 +176,22 @@ class NuevoMed : AppCompatActivity() {
             context.startActivity(intento)
 
         } catch (e: Exception) {
+            Log.e("CALENDARIO", "Error: ${e.message}")
+            Toast.makeText(this, R.string.tstErrorCalendario , Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun programarDosisHoras(context: Context, nombreMed: String, intervalo: Int){
+        try {
+            val alarma = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intento2 = Intent(context, ReminderReceiver::class.java).apply{
+                putExtra("Pastilla", nombreMed)
+            }
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, intento2, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            val start = System.currentTimeMillis()
+            alarma.setRepeating(AlarmManager.RTC_WAKEUP, start, intervalo * 60 * 60 *1000L, pendingIntent)
+        }
+        catch (e: Exception) {
             Log.e("CALENDARIO", "Error: ${e.message}")
             Toast.makeText(this, R.string.tstErrorCalendario , Toast.LENGTH_SHORT).show()
         }
