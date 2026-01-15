@@ -19,5 +19,6 @@
     <string name="tvperfilTecnico">Lenguajes: Kotlin y Java.  Arquitectura: Implementación de Clean Architecture y patrones MVVM.  Interfaz de Usuario: Dominio de Jetpack Compose y XML.  Gestión de Datos: Manejo de Retrofit para APIs y Room para bases de datos locales.</string>
     <string name="btnCamara">Abrir cámara</string>
     <string name="btnCalendario">Añadir al calendario</string>
+    <string name="BtnVolverInicio">Volver</string>
 
 </resources>
