@@ -20,5 +20,12 @@
     <string name="btnCamara">Abrir cámara</string>
     <string name="btnCalendario">Añadir al calendario</string>
     <string name="BtnVolverInicio">Volver</string>
+    <string name="tvInstruccionesMain">Pulsa la imagen para empezar a escanear medicamento</string>
+    <string name="tvMedInstrucciones">Instrucciones</string>
+    <string name="tvInstPaso1">1º Pulsa \"Abrir cámara\" y escanea el codigo de barras de tu medicamento.</string>
+    <string name="tvInstPaso2">2º Una vez confirmado el medicamento, escribir la frecuencia del aviso en la casilla que pone tiempo.</string>
+    <string name="tvInstPaso3">3º Pulsando \"Añadir al Calendario\" envia la informacion a tu Google Calendar y terminado</string>
+    <string name="hintTiempo">Tiempo</string>
+    <string name="tvInstPaso4">4º Cada vez que te llegue una notificacion, pulsa aceptar tras administrar el medicamento.</string>
 
 </resources>
