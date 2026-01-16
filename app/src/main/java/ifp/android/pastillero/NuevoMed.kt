@@ -20,7 +20,10 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import kotlin.math.log
 import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.os.Build
 
 
 private lateinit var binding: ActivityNuevoMedBinding
@@ -183,19 +186,36 @@ class NuevoMed : AppCompatActivity() {
 
     // funcion que programa notifiaciones en el dispositivo
     fun programarDosisHoras(context: Context, nombreMed: String, intervalo: Int){
-        try {
-            val alarma = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intento2 = Intent(context, ReminderReceiver::class.java).apply{
-                putExtra("Pastilla", nombreMed)
-            }
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, intento2, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-            val start = System.currentTimeMillis()
-            alarma.setRepeating(AlarmManager.RTC_WAKEUP, start, intervalo * 60 * 60 *1000L, pendingIntent)
-            Log.i("NOTIFICACIONES", "Notificación puesta con éxito")
+        val alarma = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = "MED_CHANNEL"
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channel =
+                NotificationChannel(channelId, "Dosis", NotificationManager.IMPORTANCE_HIGH)
+            notificationManager.createNotificationChannel(channel)
         }
-        catch (e: Exception) {
-            Log.e("CALENDARIO", "Error: ${e.message}")
-            Toast.makeText(this, R.string.tstErrorCalendario , Toast.LENGTH_SHORT).show()
+
+        val intento2 = Intent(context, ReminderReceiver::class.java).apply {
+            putExtra("Pastilla", nombreMed)
         }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            nombreMed.hashCode(),
+            intento2,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val start = System.currentTimeMillis() + (0) // intervalo * 60 * 60 * 1000L
+
+        // setInexactRepeating es más amigable con la batería
+        alarma.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            start,
+            0, // mismo que en la línea 205
+            pendingIntent
+        )
+
     }
 }

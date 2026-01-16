@@ -30,8 +30,8 @@ class ReminderReciber: BroadcastReceiver() {
 
         // ajustes de la notificación
         val builder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm) // Icono del sistema por defecto
-            .setContentTitle("Alerta de Medicación")
+            .setSmallIcon(android.R.drawable.ic_menu_agenda)
+            .setContentTitle("Recordatorio de Medicación")
             .setContentText("Es momento de tomar: $nombreMed")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
