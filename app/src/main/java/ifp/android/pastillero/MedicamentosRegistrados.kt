@@ -28,17 +28,17 @@ class MedicamentosRegistrados : AppCompatActivity() {
         if (medicamentos.isEmpty()) {
             Toast.makeText(this, "No hay medicamentos registrados", Toast.LENGTH_SHORT).show()
         }
-
-        val sampleMeds = listOf(
-            "Aspirina - cada 8 horas",
-            "Paracetamol - cada 6 horas",
-            "Ibuprofeno - cada 12 horas"
-        )
+// Esto son datos placeholder para probar la lista
+//        val sampleMeds = listOf(
+//            "Aspirina - cada 8 horas",
+//            "Paracetamol - cada 6 horas",
+//            "Ibuprofeno - cada 12 horas"
+//        )
 
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
-            sampleMeds
+            medicamentos
         )
 
         listView.adapter = adapter
