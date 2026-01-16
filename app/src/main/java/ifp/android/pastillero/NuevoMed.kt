@@ -101,6 +101,18 @@ class NuevoMed : AppCompatActivity() {
                 }
             }
         }
+        binding.btnNuevoMain.setOnClickListener {
+            val intento = Intent(this, MainActivity::class.java)
+            startActivity(intento)
+            finish()
+            Log.i("SALIENDO_NUEVO_MED", "Saliendo de Nuevo Med")
+        }
+        binding.btnNuevotoRegistro.setOnClickListener {
+            val intento = Intent(this, MedicamentosRegistrados::class.java)
+            startActivity(intento)
+            finish()
+            Log.i("SALIENDO_NUEVO_MED", "Saliendo de Nuevo Med")
+        }
     }
 
     // funcion para poder usar la cámara para leer un código.
@@ -217,5 +229,20 @@ class NuevoMed : AppCompatActivity() {
             pendingIntent
         )
 
+        guardarMedicamento(context, nombreMed, intervalo, start)
     }
+    private fun guardarMedicamento(
+        context: Context,
+        nombreMed: String,
+        intervalo: Int,
+        startTime: Long
+    ) {
+        val prefs = context.getSharedPreferences("meds_prefs", Context.MODE_PRIVATE)
+
+        val medData = "$intervalo|$startTime"
+        prefs.edit()
+            .putString(nombreMed, medData)
+            .apply()
+    }
+
 }
