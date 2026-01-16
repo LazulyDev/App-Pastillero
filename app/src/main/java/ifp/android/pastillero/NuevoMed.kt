@@ -181,6 +181,7 @@ class NuevoMed : AppCompatActivity() {
         }
     }
 
+    // funcion que programa notifiaciones en el dispositivo
     fun programarDosisHoras(context: Context, nombreMed: String, intervalo: Int){
         try {
             val alarma = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -190,6 +191,7 @@ class NuevoMed : AppCompatActivity() {
             val pendingIntent = PendingIntent.getBroadcast(context, 0, intento2, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
             val start = System.currentTimeMillis()
             alarma.setRepeating(AlarmManager.RTC_WAKEUP, start, intervalo * 60 * 60 *1000L, pendingIntent)
+            Log.i("NOTIFICACIONES", "Notificación puesta con éxito")
         }
         catch (e: Exception) {
             Log.e("CALENDARIO", "Error: ${e.message}")
