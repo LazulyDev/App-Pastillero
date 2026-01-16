@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Pastillero</string>
 
-<!--    Activity Main-->
+    <!--    Activity Main-->
     <string name="btnAboutUs">Sobre los Devs</string>
 
-<!--    Actividad NuevoMed-->
+    <!--    Actividad NuevoMed-->
     <string name="tstTiempoVacío">Error. Tiempo vacío</string>
     <string name="tstSeleccionNuevoMed">Es necesario seleccionar un nuevo medicamento</string>
     <string name="tstErrorCamara">Error al abrir la cámara</string>
@@ -12,7 +12,7 @@
     <string name="tstMedicamentoNoEncontrado">No se ha encontrado el medicamento</string>
     <string name="tstErrorCalendario">No se puedo abrir el calendario</string>
 
-<!--    Actividad sobre nosotros-->
+    <!--    Actividad sobre nosotros-->
     <string name="tvTituloAboutUs">Roberto Garcia, ChenHang Zang</string>
     <string name="tvAboutUs">Somos dos programadores enfocados en el desarrollo nativo para Android, unidos por la curiosidad técnica y el deseo de crear soluciones móviles eficientes. Como estudiantes avanzados, nos dedicamos a transformar ideas complejas en interfaces intuitivas y código escalable.</string>
     <string name="tvTituloPerfilTécnico">Perfil Técnico</string>
@@ -29,5 +29,7 @@
     <string name="tvInstPaso4">4º Cada vez que te llegue una notificacion, pulsa aceptar tras administrar el medicamento.</string>
     <string name="btnHoras">Añadir medicina (horas)</string>
     <string name="txtNumeroNegativo">Error: El numero es negativo</string>
+    <string name="txtAppTitle">Med Scanner</string>
+    <string name="txtRegistros">Registros</string>
 
 </resources>

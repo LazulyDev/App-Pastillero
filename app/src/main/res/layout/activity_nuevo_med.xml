@@ -1,98 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".NuevoMed">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutInstrucciones"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.050000012">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvNuevoMedInstrucciones"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/btnNuevoMain"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="60dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/imagen_pastilla"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutInstrucciones"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/tvMedInstrucciones"
-            android:textSize="24sp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnNuevoMain">
 
-        <TextView
-            android:id="@+id/tvPaso1"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvNuevoMedInstrucciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tvMedInstrucciones"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPaso1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tvInstPaso1" />
+
+            <TextView
+                android:id="@+id/tvPaso2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tvInstPaso2" />
+
+            <TextView
+                android:id="@+id/tvPaso3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tvInstPaso3" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutAcciones"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/tvInstPaso1" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayoutInstrucciones">
 
-        <TextView
-            android:id="@+id/tvPaso2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tvInstPaso2" />
+            <Button
+                android:id="@+id/btnAbrirAcmara"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnCamara" />
 
-        <TextView
-            android:id="@+id/tvPaso3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tvInstPaso3" />
+            <EditText
+                android:id="@+id/edtIntervalo"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/hintTiempo"
+                android:inputType="number" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvPruebaBarcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
 
-    <LinearLayout
-        android:id="@+id/linearLayoutAcciones"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutInstrucciones"
-        app:layout_constraintVertical_bias="0.0">
+            <Button
+                android:id="@+id/btnAnadirMed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/btnCalendario" />
 
-        <Button
-            android:id="@+id/btnAbrirAcmara"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btnCamara" />
+            <Button
+                android:id="@+id/btnAnadirMedHoras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/btnHoras" />
 
-        <EditText
-            android:id="@+id/edtIntervalo"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:hint="@string/hintTiempo"
-            android:inputType="text" />
+            <Button
+                android:id="@+id/btnNuevotoRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txtRegistros" />
 
-        <TextView
-            android:id="@+id/tvPruebaBarcode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/btnAnadirMed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btnCalendario" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/btnAnadirMedHoras"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btnHoras" />
-
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
