@@ -207,13 +207,13 @@ class NuevoMed : AppCompatActivity() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val start = System.currentTimeMillis() + (0) // intervalo * 60 * 60 * 1000L
+        val start = System.currentTimeMillis() + (intervalo * 60 * 60 * 1000L)
 
         // setInexactRepeating es más amigable con la batería
         alarma.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
             start,
-            0, // mismo que en la línea 205
+            intervalo * 60 * 60 * 1000L, 
             pendingIntent
         )
 
