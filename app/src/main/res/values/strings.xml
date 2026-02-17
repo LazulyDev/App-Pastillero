@@ -29,6 +29,5 @@
     <string name="tvInstPaso4">4º Cada vez que te llegue una notificacion, pulsa aceptar tras administrar el medicamento.</string>
     <string name="btnHoras">Añadir medicina (horas)</string>
     <string name="txtNumeroNegativo">Error: El numero es negativo</string>
-    <string name="tvMedPorDefecto">Medicamento no encontrado</string>
 
 </resources>

@@ -24,7 +24,7 @@ class AboutUs : AppCompatActivity() {
         binding = ActivityAboutUsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnVolver.setOnClickListener {
+        binding.btnAboutMain.setOnClickListener {
             val intento = Intent(this, MainActivity::class.java)
             startActivity(intento)
             finish()

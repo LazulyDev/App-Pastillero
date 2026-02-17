@@ -78,21 +78,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.google.android.material.card.MaterialCardView
+        <TextView
+            android:id="@+id/tvPruebaBarcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?attr/materialCardViewElevatedStyle"
-            app:cardElevation="3dp"
-            app:cardUseCompatPadding="true">
+            android:text="" />
 
-            <TextView
-                android:id="@+id/tvPruebaBarcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/tvMedPorDefecto" />
-
-        </com.google.android.material.card.MaterialCardView>
         <Button
             android:id="@+id/btnAnadirMed"
             android:layout_width="match_parent"

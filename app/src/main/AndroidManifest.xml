@@ -5,9 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- permisos de acceso al calendario para que el usuario programe las dosis -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" /> <!-- notificaciones para Android13 y superiores -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- notificaciones para Android13 y superiores -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -19,6 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pastillero">
+        <activity
+            android:name=".MedicamentosRegistrados"
+            android:exported="false" />
         <activity
             android:name=".AboutUs"
             android:exported="false" />
@@ -34,10 +37,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver
             android:name=".ReminderReceiver"
             android:exported="false" />
-
-   </application>
+    </application>
 
 </manifest>
