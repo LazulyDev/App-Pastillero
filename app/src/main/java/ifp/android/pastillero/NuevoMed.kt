@@ -24,6 +24,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.os.Build
+import android.widget.ArrayAdapter
 
 
 private lateinit var binding: ActivityNuevoMedBinding
@@ -58,8 +59,25 @@ class NuevoMed : AppCompatActivity() {
             accesoCamara()
         }
 
+
+        // Spinner para las horas de las dosis.
+        val horas = listOf<String>("0 horas", "1 hora", "3 horas", "8 horas", "16 horas")
+
+        val dosisAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, horas)
+        dosisAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spnHoras.adapter = dosisAdapter
+
+        // spinner para los días para el calendario
+        val dias = listOf("1 día", "2 días", "3 días", "7 días")
+        val diasAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dias)
+        diasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spnDias.adapter = diasAdapter
+
+
         binding.btnAnadirMed.setOnClickListener {
-            val intervalo = binding.edtIntervalo.text.toString()
+            var numeroDias = binding.spnDias.selectedItem.toString()
+            numeroDias = numeroDias.replace(Regex("[^0-9]"), "")
+            val intervalo = numeroDias.toString()
 
             if(intervalo.isNullOrEmpty()){
                 Log.e("ERROR_TIEMPO_DADO", "Error: el tiempo está vacío")
@@ -75,7 +93,12 @@ class NuevoMed : AppCompatActivity() {
             }
         }
         binding.btnAnadirMedHoras.setOnClickListener {
-            val intervaloHoras = binding.edtIntervalo.text.toString()
+            var numerohoras = binding.spnHoras.selectedItem.toString()
+            numerohoras = numerohoras.replace(Regex("[^0-9]"), "")
+
+            val intervaloHoras = (numerohoras.toFloat() / 60).toString()
+
+
             if(intervaloHoras.isNullOrEmpty()){
                 Log.e("ERROR_TIEMPO_DADO", "Error: el tiempo está vacío")
                 Toast.makeText(this, R.string.tstTiempoVacío, Toast.LENGTH_SHORT).show()
@@ -86,7 +109,7 @@ class NuevoMed : AppCompatActivity() {
                     Toast.makeText(this, R.string.tstSeleccionNuevoMed, Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    val intervalo2 = intervaloHoras.toInt()
+                    val intervalo2 = intervaloHoras.toFloat()
                     if(intervalo2 <= 0){
                         Log.e("ERROR_TIEMPO_DADO", "Error: el tiempo es un numero negativo")
                         Toast.makeText(this, R.string.txtNumeroNegativo, Toast.LENGTH_SHORT).show()
@@ -170,7 +193,7 @@ class NuevoMed : AppCompatActivity() {
                 putExtra(CalendarContract.Events.DESCRIPTION, "Tomar cada $intervalo horas.")
                 putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, ahora.timeInMillis)
                 putExtra(CalendarContract.EXTRA_EVENT_END_TIME, ahora.timeInMillis + 15 * 60 * 1000)
-                putExtra(CalendarContract.Events.RRULE, "FREQ=DAILY;INTERVAL=1")
+                putExtra(CalendarContract.Events.RRULE, "FREQ=DAILY;INTERVAL=$intervalo")
                 putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
 
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -185,7 +208,7 @@ class NuevoMed : AppCompatActivity() {
     }
 
     // funcion que programa notifiaciones en el dispositivo
-    fun programarDosisHoras(context: Context, nombreMed: String, intervalo: Int){
+    fun programarDosisHoras(context: Context, nombreMed: String, intervalo: Float){
         val alarma = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -207,13 +230,13 @@ class NuevoMed : AppCompatActivity() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val start = System.currentTimeMillis() + (intervalo * 60 * 60 * 1000L)
+        val start = System.currentTimeMillis() + (intervalo * 60 * 60 * 1000)
 
         // setInexactRepeating es más amigable con la batería
         alarma.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
-            start,
-            intervalo * 60 * 60 * 1000L, 
+            start.toLong(),
+            (intervalo * 60 * 60 * 1000).toLong(),
             pendingIntent
         )
 

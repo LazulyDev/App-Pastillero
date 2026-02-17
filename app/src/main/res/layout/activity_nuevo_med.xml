@@ -68,20 +68,31 @@
             android:layout_height="wrap_content"
             android:text="@string/btnCamara" />
 
-        <EditText
-            android:id="@+id/edtIntervalo"
+        <Spinner
+            android:id="@+id/spnHoras"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:hint="@string/hintTiempo"
-            android:inputType="text" />
+            android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/tvPruebaBarcode"
+        <Spinner
+            android:id="@+id/spnDias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            style="?attr/materialCardViewElevatedStyle"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true">
 
+            <TextView
+                android:id="@+id/tvPruebaBarcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/tvMedPorDefecto" />
+
+        </com.google.android.material.card.MaterialCardView>
         <Button
             android:id="@+id/btnAnadirMed"
             android:layout_width="match_parent"
