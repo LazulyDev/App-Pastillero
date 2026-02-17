@@ -21,20 +21,21 @@ class MedicamentosRegistrados : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        binding = ActivityMedicamentosRegistradosBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding = ActivityMedicamentosRegistradosBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
 
         val medicamentosDias = cargarMedicamentosDias(this).toMutableList()
         if (medicamentosDias.isEmpty()) {
             medicamentosDias.addAll(
                 listOf(
-                    "📅 Paracetamol\nCada 2 días",
-                    "📅 Ibuprofeno\nCada 1 día"
+                    "📅 Kriptonita\nCada 2 días",
+                    "📅 Unobtanium\nCada 1 día"
                 )
             )
         }
@@ -45,9 +46,9 @@ class MedicamentosRegistrados : AppCompatActivity() {
 
             medicamentoHoras.addAll(
                 listOf(
-                    "💊 Aspirina\nCada 8 horas\nPróxima dosis: en 3h 20m",
-                    "💊 Paracetamol\nCada 6 horas\nPróxima dosis: en 1h 10m",
-                    "💊 Ibuprofeno\nCada 12 horas\nPróxima dosis: en 8h 45m"
+                    "💊 Ejemplo1\nCada 8 horas\nPróxima dosis: en 3h 20m",
+                    "💊 Ejemplo2\nCada 6 horas\nPróxima dosis: en 1h 10m",
+                    "💊 Ejemplo3\nCada 12 horas\nPróxima dosis: en 8h 45m"
                 )
             )
         }

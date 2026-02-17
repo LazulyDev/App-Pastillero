@@ -42,15 +42,15 @@ class NuevoMed : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_nuevo_med)
+        binding = ActivityNuevoMedBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        binding = ActivityNuevoMedBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
 
         // botón para acceder a la cámara.
         binding.btnAbrirAcmara.setOnClickListener {
