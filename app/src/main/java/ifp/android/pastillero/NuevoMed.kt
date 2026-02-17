@@ -12,13 +12,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import ifp.android.pastillero.databinding.ActivityNuevoMedBinding
 import kotlinx.coroutines.launch
 import java.util.Calendar
-import kotlin.math.log
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -134,6 +132,11 @@ class NuevoMed : AppCompatActivity() {
                 }
             }
         }
+        binding.btnNuevo2Registro.setOnClickListener {
+            val intent1 = Intent(this, MedicamentosRegistrados::class.java)
+            startActivity(intent1)
+            finish()
+        }
 //        binding.btnNuevoMain.setOnClickListener {
 //            val intento = Intent(this, MainActivity::class.java)
 //            startActivity(intento)
@@ -207,7 +210,7 @@ class NuevoMed : AppCompatActivity() {
         }
 
         // funcion para proramar las dosis en el calendario, esto funciona a escala de dias
-        fun programarDosis(context: Context, nombreMed: String, intervalo: Int) {
+        fun programarDosis(context: Context, nombreMed: String, intervaloDias: Int) {
             try {
                 val ahora = Calendar.getInstance()
 
@@ -215,24 +218,37 @@ class NuevoMed : AppCompatActivity() {
                     data = CalendarContract.Events.CONTENT_URI
 
                     putExtra(CalendarContract.Events.TITLE, "Pastilla: $nombreMed")
-                    putExtra(CalendarContract.Events.DESCRIPTION, "Tomar cada $intervalo horas.")
+                    putExtra(CalendarContract.Events.DESCRIPTION, "Tomar cada $intervaloDias días.")
                     putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, ahora.timeInMillis)
-                    putExtra(
+                    /*putExtra(
                         CalendarContract.EXTRA_EVENT_END_TIME,
                         ahora.timeInMillis + 15 * 60 * 1000
-                    )
-                    putExtra(CalendarContract.Events.RRULE, "FREQ=DAILY;INTERVAL=$intervalo")
+                    )*/
+                    putExtra(CalendarContract.Events.RRULE, "FREQ=DAILY;INTERVAL=$intervaloDias")
                     putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
 
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
 
                 context.startActivity(intento)
+                guardarMedicamentoDias(context, nombreMed, intervaloDias, ahora.timeInMillis)
 
             } catch (e: Exception) {
                 Log.e("CALENDARIO", "Error: ${e.message}")
                 Toast.makeText(this, R.string.tstErrorCalendario, Toast.LENGTH_SHORT).show()
             }
+        }
+
+        fun guardarMedicamentoDias(
+            context: Context,
+            nombreMed: String,
+            intervaloDias: Int,
+            startTime: Long
+        ) {
+            val prefs = context.getSharedPreferences("meds_dias_prefs", Context.MODE_PRIVATE)
+            prefs.edit()
+                .putString(nombreMed, "$intervaloDias|$startTime")
+                .apply()
         }
 
         // funcion que programa notifiaciones en el dispositivo
